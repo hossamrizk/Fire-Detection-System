@@ -1,4 +1,4 @@
-ultralytics==8.1.2
+pip install ultralytics==8.1.2
 streamlit
 torch==2.1.2
 pandas==2.1.4
