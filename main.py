@@ -54,6 +54,7 @@ class YOLOVideoTransformer(VideoTransformerBase):
             to=self.number
         )
 
+
 def main():
     st.title('Fire Detection with YOLO and Streamlit')
 
