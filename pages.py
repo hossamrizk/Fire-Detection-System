@@ -171,6 +171,7 @@ def try_page():
             if number:
                 st.write("Fire detection is activated. Please wait...")
                 webrtc_ctx = webrtc_streamer(key="fire-detection", video_transformer_factory=YOLOVideoTransformer(client, number))
+
                 st.write("Fire detection completed!")
             else:
                 st.warning("Please enter your WhatsApp number before detecting fire")
