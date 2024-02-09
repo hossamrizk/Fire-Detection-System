@@ -3,6 +3,7 @@ import torch
 import time
 import streamlit as st
 from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
+import numpy as np
 
 from ultralytics import YOLO
 
@@ -16,7 +17,12 @@ class YOLOVideoTransformer(VideoTransformerBase):
         self.fire_detected_time = None
 
     def transform(self, frame):
-        detections = self.model(frame, conf=0.6)[0]  # Run fire detection
+        # Convert frame to NumPy array
+        frame_np = np.array(frame)
+        
+        # Run YOLO model on the frame
+        detections = self.model(frame_np, conf=0.6)[0]
+        
         detections_fire = []
 
         for detection in detections:
@@ -27,8 +33,8 @@ class YOLOVideoTransformer(VideoTransformerBase):
         # Draw bounding boxes for fire detections
         for fire_box in detections_fire:
             x1, y1, x2, y2, _ = fire_box
-            cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
-            cv2.putText(frame, 'Fire', (int(x1), int(y1) - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+            cv2.rectangle(frame_np, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
+            cv2.putText(frame_np, 'Fire', (int(x1), int(y1) - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
             # Send message if fire detected
             if not self.message_sent:
@@ -44,7 +50,9 @@ class YOLOVideoTransformer(VideoTransformerBase):
                 self.send_message(content="Alert, Fire still detected after 5 seconds!!!")
                 self.fire_detected_time = None  # Reset timer
 
-        return frame
+        # Convert the modified NumPy array back to a Streamlit image
+        frame_with_boxes = frame_np.astype(np.uint8)
+        return frame_with_boxes
 
     def send_message(self, content):
         # Send message via Twilio
