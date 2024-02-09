@@ -1,5 +1,6 @@
 ultralytics==8.1.2
 streamlit
+streamlit-webrtc
 torch==2.1.2
 pandas==2.1.4
 opencv-python-headless==4.9.0.80
