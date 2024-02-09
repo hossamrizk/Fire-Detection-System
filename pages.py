@@ -170,7 +170,7 @@ def try_page():
             number = 'whatsapp:' + whatsapp_number if whatsapp_number else None  # Format the WhatsApp number
             if number:
                 st.write("Fire detection is activated. Please wait...")
-                YOLOVideoTransformer.detect_fire(number, client)  # Pass WhatsApp number and Twilio client to detect_fire function
+                YOLOVideoTransformer.transform(number, client)  # Pass WhatsApp number and Twilio client to detect_fire function
                 st.write("Fire detection completed!")
             else:
                 st.warning("Please enter your WhatsApp number before detecting fire")
