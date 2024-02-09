@@ -4,7 +4,7 @@ Welcome to the Fire Detection System project! This repository contains code for 
 
 ## Overview
 
-This project aims to provide a simple yet effective solution for fire detection using computer vision techniques. It utilizes the YOLOv8 model, a state-of-the-art object detection algorithm, to detect the presence of fire in images or video streams. Once a fire is detected, the system sends a WhatsApp message to alert the user using the Twilio API.
+This project aims to provide a simple yet effective solution for fire detection using computer vision techniques. It utilizes the YOLOv8 model, a state-of-the-art object detection algorithm, to detect the presence of fire in video streams. Once a fire is detected, the system sends a WhatsApp message to alert the user using the Twilio API.
 
 ## Features
 
@@ -12,7 +12,6 @@ This project aims to provide a simple yet effective solution for fire detection 
 - Integration with Twilio for real-time WhatsApp alerts
 - Streamlit web application for easy user interaction
 - Simple setup process requiring only Twilio account details
-- Demo version for study purposes
 
 ## Getting Started
 
