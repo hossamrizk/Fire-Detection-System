@@ -2,5 +2,5 @@ ultralytics==8.1.2
 streamlit
 torch==2.1.2
 pandas==2.1.4
-opencv-python==4.9.0.80
+opencv-python-headless==4.9.0.80
 twilio
