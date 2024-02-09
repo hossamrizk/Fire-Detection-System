@@ -13,6 +13,10 @@ This project aims to provide a simple yet effective solution for fire detection 
 - Streamlit web application for easy user interaction
 - Simple setup process requiring only Twilio account details
 
+## The deployed app
+
+[APP](https://fire-detection-system.streamlit.app/)
+
 ## Getting Started
 
 To try out the fire detection system, follow these steps:
