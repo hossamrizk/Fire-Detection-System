@@ -8,7 +8,7 @@ from ultralytics import YOLO
 
 class YOLOVideoTransformer(VideoTransformerBase):
     def __init__(self, client, number):
-        self.model = YOLO('best.pt').autoshape()  # Load YOLO model
+        self.model = YOLO('best.pt') # Load YOLO model
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.client = client
         self.number = number
