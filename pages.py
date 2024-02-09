@@ -152,7 +152,6 @@ def try_page():
     Enter these informations, Finaly you will be able to try the demo!
     """)
     st.write("Don`t forget to press q if you want to stop the program")
-    st.write("**Now experience the wonders of computer vision in real life!**")
 
     # Input field for Twilio credentials
     account_sid = st.text_input("Enter your Twilio Account SID:")
@@ -170,7 +169,14 @@ def try_page():
             number = 'whatsapp:' + whatsapp_number if whatsapp_number else None  # Format the WhatsApp number
             if number:
                 st.write("Fire detection is activated. Please wait...")
-                YOLOVideoTransformer.transform(number, client)  # Pass WhatsApp number and Twilio client to detect_fire function
+                webrtc_ctx = webrtc_streamer(
+                    key="fire-detection",
+                    video_transformer_factory=lambda: YOLOVideoTransformer(client, number),
+                    client=client,
+                    number=number
+                )
+                if not webrtc_ctx.video_transformer:
+                    st.warning("Please allow access to your camera.")
                 st.write("Fire detection completed!")
             else:
                 st.warning("Please enter your WhatsApp number before detecting fire")
