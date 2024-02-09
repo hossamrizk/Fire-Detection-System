@@ -34,9 +34,11 @@ To try out the fire detection system, follow these steps:
    ```bash
    streamlit run app.py
 
-3. Create an account on [Twilio](https://www.twilio.com/en-us) and obtain your Account SID, Auth Token, and Twilio phone number.
-4. In Try it page, write your accountid, auth token and your number.
-5. Finaly you are able to try it!
+5. Create an account on [Twilio](https://www.twilio.com/en-us) and obtain your Account SID, Auth Token, and Twilio phone number.
+6. In Try it page, write your accountid, auth token and your number.
+7. Finaly you are able to try it!
+
+
 ## Disclaimer
 This project is intended as a demonstration and study aid. It may not be suitable for production use without further development and testing. Please use caution when relying on automated systems for critical tasks such as fire detection. 
 Feel free to explore the code and contribute to its improvement!
