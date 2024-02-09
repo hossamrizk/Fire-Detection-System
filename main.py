@@ -16,7 +16,6 @@ class YOLOVideoTransformer(VideoTransformerBase):
         self.fire_detected_time = None
 
     def transform(self, frame):
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Convert frame from BGR to RGB
         detections = self.model(frame, conf=0.6)[0]  # Run fire detection
         detections_fire = []
 
