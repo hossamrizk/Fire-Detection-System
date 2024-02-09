@@ -1,4 +1,6 @@
 from ultralytics import YOLO
+import streamlit as st
+from streamlit_webrtc import webrtc_streamer
 import cv2
 import torch
 import time
@@ -21,15 +23,14 @@ def detect_fire(number, client):
     # Load YOLO model
     model = YOLO('best.pt').to(device)
 
-    cap = cv2.VideoCapture(0)
-    fire_detected_time = None  # Initialize fire detection time
-    while True:
-        # Read frame from camera
-        ret, frame = cap.read()
+    webrtc_ctx = webrtc_streamer(key="example")
+    if webrtc_ctx.video_transformer:
+        while True:
+            video_frame = webrtc_ctx.video_transformer.read()
+            if video_frame is None:
+                break
 
-        if ret:
-            # Convert frame from BGR to RGB
-            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = video_frame.to_ndarray(format="bgr24")
 
             # Run fire detection
             fire_detection = model(frame, conf=0.6)[0]
@@ -61,15 +62,5 @@ def detect_fire(number, client):
                     fire_detected_time = None  # Reset timer
 
             # Display the frame with bounding boxes and labels.
-            cv2.imshow('Fire Detection Result', frame)
-
-            # Break the loop if 'q' is pressed
-            if cv2.waitKey(100) & 0xFF == ord('q'):
-                break
-        else:
-            break
-
-    # Release the camera and close OpenCV windows
-    cap.release()
-    cv2.destroyAllWindows()
+            st.image(frame, channels="BGR", use_column_width=True)
 
