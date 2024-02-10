@@ -69,7 +69,7 @@ def main():
     number = "YOUR_PHONE_NUMBER"
     client = "YOUR_TWILIO_CLIENT"  # Initialize your Twilio client here
 
-    webrtc_ctx = webrtc_streamer(key="fire-detection", video_transformer_factory=YOLOVideoTransformer, client=client, number=number)
+    webrtc_ctx = webrtc_streamer(key="example", video_transformer_factory=YOLOVideoTransformer, client=client, number=number)
 
     if not webrtc_ctx.video_transformer:
         st.warning("Please allow access to your camera.")
