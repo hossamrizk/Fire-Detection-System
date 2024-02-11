@@ -171,11 +171,12 @@ def try_page():
     to_number = st.text_input("Recipient's Number with country code")
     threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
+    client = Client(account_sid, auth_token)
+    token = client.tokens.create()
+    
     # Create instance of VideoTransformer
     video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
     
-    client = Client(account_sid, auth_token)
-    token = client.tokens.create()
 
     # Display the video stream and fire detection
     webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer, rtc_configuration={
