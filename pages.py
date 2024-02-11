@@ -25,7 +25,6 @@ def main():
             st.error(f"An error occurred while creating Twilio client: {str(e)}")
 
     try_page(account_sid, auth_token, to_number, threshold)
-
 def home_page():
     # Sidebar
     with st.sidebar:
@@ -155,13 +154,13 @@ def try_page(account_sid, auth_token, to_number, threshold):
     st.title("Try a free demo here!")
     st.write("**Please note: This is a free demo, which does not contain all options or features and may not have optimal accuracy.**")
     st.write("""
-    **Please note:** You must have an account on twilio before you can try this demo.
-    If you don`t have one, you can create one using this [link](https://login.twilio.com/u/signup?state=hKFo2SBDSm45NjBsdzQxZElvLXZCeVBQWUdxdE1wOFAxb0FMeaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIDNOblY0OEE4dFFxV1kzb0EzazBWYzdQbzRRSEc4b1lfo2NpZNkgTW05M1lTTDVSclpmNzdobUlKZFI3QktZYjZPOXV1cks)\n
-    After creating an account search for console dashboard, Then scroll down to get your Account SID and Auth Token\n
-    Enter these informations, Finaly you will be able to try the demo!
+    **Please note:** You must have an account on Twilio before you can try this demo.
+    If you don't have one, you can create one using this [link](https://login.twilio.com/u/signup?state=hKFo2SBDSm45NjBsdzQxZElvLXZCeVBQWUdxdE1wOFAxb0FMeaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIDNOblY0OEE4dFFxV1kzb0EzazBWYzdQbzRRSEc4b1lfo2NpZNkgTW05M1lTTDVSclpmNzdobUlKZFI3QktZYjZPOXV1cks)\n
+    After creating an account, search for the console dashboard. Then scroll down to get your Account SID and Auth Token.\n
+    Enter this information, and finally, you will be able to try the demo!
     """)
-    st.write("If you don`t enter the required information, you will face issues while running video. And the live video will stuck if it detect fire.\n"
-             "So to avoid any problems please enter the required information first\n"
+    st.write("If you don't enter the required information, you will face issues while running the video. And the live video will be stuck if it detects fire.\n"
+             "So to avoid any problems, please enter the required information first.\n"
              )
     st.write("Thanks, I hope you like it. :)")
 
@@ -176,7 +175,6 @@ def try_page(account_sid, auth_token, to_number, threshold):
 
         if not webrtc_ctx.video_transformer:
             st.warning("Please allow access to your camera.")
-
 
 def feedback_page():
     # Sidebar
