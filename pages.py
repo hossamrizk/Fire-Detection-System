@@ -1,9 +1,14 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
-import pandas as pd
 from main import VideoTransformer
 from twilio.rest import Client
 
+# Set page configuration
+st.set_page_config(
+    page_title="Fire Detection Demo",
+    page_icon="🔥",
+    layout="wide"
+)
 
 account_sid = st.text_input("Enter your Twilio Account SID:")
 auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
@@ -19,7 +24,6 @@ if account_sid and auth_token:
         st.error(f"An error occurred while creating Twilio client: {str(e)}")
 
 def home_page():
-
     # Sidebar
     with st.sidebar:
         if st.sidebar.button("Contact me"):
@@ -143,26 +147,7 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 from main import VideoTransformer
 
-import streamlit as st
-from streamlit_webrtc import webrtc_streamer
-from main import VideoTransformer
-
 def try_page():
-    # Sidebar
-    with st.sidebar:
-        if st.sidebar.button("Contact me"):
-            st.sidebar.markdown(
-                """
-                **Contact:-**\n
-                *Hossam El-Dein Rizk*\n
-                *Computer Vision Engineer*\n
-                hossamrizk048@gmail.com\n
-                [linkedin](https://www.linkedin.com/in/hossamrizk10/)
-                [Github](https://github.com/hossamrizk)
-                [Kaggle](https://www.kaggle.com/hossamrizk)
-                """
-            )
-
     # Main content
     st.title("Try a free demo here!")
     st.write("**Please note: This is a free demo, which does not contain all options or features and may not have optimal accuracy.**")
