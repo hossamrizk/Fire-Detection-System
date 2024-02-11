@@ -174,6 +174,8 @@ def try_page():
     # Create instance of VideoTransformer
     video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
 
+    token = client.tokens.create()
+
     # Display the video stream and fire detection
     webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer, rtc_configuration={
       "iceServers": token.ice_servers
