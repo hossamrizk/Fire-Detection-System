@@ -10,18 +10,21 @@ st.set_page_config(
     layout="wide"
 )
 
-account_sid = st.text_input("Enter your Twilio Account SID:")
-auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
-to_number = st.text_input("Recipient's Number with country code")
-threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
+def main():
+    account_sid = st.text_input("Enter your Twilio Account SID:")
+    auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
+    to_number = st.text_input("Recipient's Number with country code")
+    threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
-if account_sid and auth_token:
-    try:
-        # Create Twilio client instance
-        client = Client(account_sid, auth_token)
-        token = client.tokens.create()
-    except TwilioException as e:
-        st.error(f"An error occurred while creating Twilio client: {str(e)}")
+    if account_sid and auth_token:
+        try:
+            # Create Twilio client instance
+            client = Client(account_sid, auth_token)
+            token = client.tokens.create()
+        except TwilioException as e:
+            st.error(f"An error occurred while creating Twilio client: {str(e)}")
+
+    try_page(account_sid, auth_token, to_number, threshold)
 
 def home_page():
     # Sidebar
@@ -147,7 +150,7 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 from main import VideoTransformer
 
-def try_page():
+def try_page(account_sid, auth_token, to_number, threshold):
     # Main content
     st.title("Try a free demo here!")
     st.write("**Please note: This is a free demo, which does not contain all options or features and may not have optimal accuracy.**")
@@ -162,21 +165,17 @@ def try_page():
              )
     st.write("Thanks, I hope you like it. :)")
 
-    # Input fields for Twilio credentials and threshold slider
-
-    
     # Create instance of VideoTransformer
     video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
     
-
     # Display the video stream and fire detection
-    webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer, rtc_configuration={
-      "iceServers": token.ice_servers
-  })
+    if account_sid and auth_token:
+        webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer, rtc_configuration={
+            "iceServers": token.ice_servers
+        })
 
-    if not webrtc_ctx.video_transformer:
-        st.warning("Please allow access to your camera.")
-
+        if not webrtc_ctx.video_transformer:
+            st.warning("Please allow access to your camera.")
 
 
 def feedback_page():
@@ -200,3 +199,5 @@ def feedback_page():
     st.write("Your feedback is crucial in helping me enhance the effectiveness and usability of my fire detection system.")
     st.write(
         "Thank you for visiting the Fire Detection and Alert System platform. Together, let's work towards a safer, fire-free future for all.")
+if __name__ == "__main__":
+    main()
