@@ -173,7 +173,8 @@ def try_page():
 
     # Create instance of VideoTransformer
     video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
-
+    
+    client = Client(account_sid, auth_token)
     token = client.tokens.create()
 
     # Display the video stream and fire detection
