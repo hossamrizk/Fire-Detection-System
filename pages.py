@@ -10,8 +10,13 @@ auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
 to_number = st.text_input("Recipient's Number with country code")
 threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
-client = Client(account_sid, auth_token)
-token = client.tokens.create()
+if account_sid and auth_token:
+    try:
+        # Create Twilio client instance
+        client = Client(account_sid, auth_token)
+        token = client.tokens.create()
+    except TwilioException as e:
+        st.error(f"An error occurred while creating Twilio client: {str(e)}")
 
 def home_page():
 
