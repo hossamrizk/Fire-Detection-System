@@ -5,6 +5,13 @@ from main import VideoTransformer
 from twilio.rest import Client
 
 
+account_sid = st.text_input("Enter your Twilio Account SID:")
+auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
+to_number = st.text_input("Recipient's Number with country code")
+threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
+
+client = Client(account_sid, auth_token)
+token = client.tokens.create()
 
 def home_page():
 
@@ -166,13 +173,7 @@ def try_page():
     st.write("Thanks, I hope you like it. :)")
 
     # Input fields for Twilio credentials and threshold slider
-    account_sid = st.text_input("Enter your Twilio Account SID:")
-    auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
-    to_number = st.text_input("Recipient's Number with country code")
-    threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
-    client = Client(account_sid, auth_token)
-    token = client.tokens.create()
     
     # Create instance of VideoTransformer
     video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
