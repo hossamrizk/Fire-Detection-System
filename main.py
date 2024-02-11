@@ -8,7 +8,7 @@ from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
 
 class VideoTransformer(VideoTransformerBase):
     def __init__(self, threshold, account_sid, auth_token, to_number):
-        self.model = YOLO('best.pt').cuda()
+        self.model = YOLO('best.pt')
         self.threshold = threshold
         self.account_sid = account_sid
         self.auth_token = auth_token
