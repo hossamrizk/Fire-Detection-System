@@ -175,7 +175,9 @@ def try_page():
     video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
 
     # Display the video stream and fire detection
-    webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer)
+    webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer, rtc_configuration={
+      "iceServers": token.ice_servers
+  })
 
     if not webrtc_ctx.video_transformer:
         st.warning("Please allow access to your camera.")
