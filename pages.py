@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 import pandas as pd
-from main import YOLOVideoTransformer
+from main import VideoTransformer
 from twilio.rest import Client
 
 
@@ -127,6 +127,14 @@ def model_page():
         st.write(df)
 
 
+import streamlit as st
+from streamlit_webrtc import webrtc_streamer
+from main import VideoTransformer
+
+import streamlit as st
+from streamlit_webrtc import webrtc_streamer
+from main import VideoTransformer
+
 def try_page():
     # Sidebar
     with st.sidebar:
@@ -152,95 +160,27 @@ def try_page():
     After creating an account search for console dashboard, Then scroll down to get your Account SID and Auth Token\n
     Enter these informations, Finaly you will be able to try the demo!
     """)
-    st.write("Don`t forget to press q if you want to stop the program")
+    st.write("If you don`t enter the required information, you will face issues while running video. And the live video will stuck if it detect fire.\n"
+             "So to avoid any problems please enter the required information first\n"
+             )
+    st.write("Thanks, I hope you like it. :)")
 
-    # Input field for Twilio credentials
+    # Input fields for Twilio credentials and threshold slider
     account_sid = st.text_input("Enter your Twilio Account SID:")
     auth_token = st.text_input("Enter your Twilio Auth Token:", type='password')
+    to_number = st.text_input("Recipient's Number with country code")
+    threshold = st.slider("Threshold", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
-    # Initialize Twilio client
-    if account_sid and auth_token:
-        client = Client(account_sid, auth_token)  # Define the Twilio client
+    # Create instance of VideoTransformer
+    video_transformer = VideoTransformer(threshold=threshold, account_sid=account_sid, auth_token=auth_token, to_number=to_number)
 
-        # Input field for WhatsApp number
-        whatsapp_number = st.text_input("Enter your WhatsApp number (with country code): ")
+    # Display the video stream and fire detection
+    webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=lambda: video_transformer)
 
-        # Button to trigger fire detection
-        if st.button("Detect Fire"):
-            number = 'whatsapp:' + whatsapp_number if whatsapp_number else None  # Format the WhatsApp number
-            if number:
-                st.write("Fire detection is activated. Please wait...")
-                webrtc_ctx = webrtc_streamer(key="fire-detection", video_transformer_factory=YOLOVideoTransformer(client, number))
-
-                st.write("Fire detection completed!")
-            else:
-                st.warning("Please enter your WhatsApp number before detecting fire")
+    if not webrtc_ctx.video_transformer:
+        st.warning("Please allow access to your camera.")
 
 
-
-
-def fire_prevention_page():
-    # Sidebar
-    with st.sidebar:
-        if st.sidebar.button("Contact me"):
-            st.sidebar.markdown(
-                """
-                **Contact:-**\n
-                *Hossam El-Dein Rizk*\n
-                *Computer Vision Engineer*\n
-                hossamrizk048@gmail.com\n
-                [linkedin](https://www.linkedin.com/in/hossamrizk10/)
-                [Github](https://github.com/hossamrizk)
-                [Kaggle](https://www.kaggle.com/hossamrizk)
-                """
-            )
-
-    st.title("Fire Prevention Tips and Emergency Preparedness")
-
-    st.write("Fire prevention is crucial for ensuring the safety of individuals and communities. By implementing proactive measures and being prepared for emergencies, we can minimize the risk of fires and mitigate their impact. Here are some tips and strategies for fire prevention and emergency preparedness:")
-
-    st.header("Prevention Tips:")
-    st.markdown("""
-    - **Install Smoke Alarms:** Make sure smoke alarms are installed on every level of your home, including inside bedrooms and outside sleeping areas. Test them monthly and replace batteries at least once a year.
-
-    - **Keep Fire Extinguishers Handy:** Have fire extinguishers readily accessible in key areas of your home, such as the kitchen and garage. Ensure that everyone knows how to operate them.
-
-    - **Practice Safe Cooking:** Never leave cooking unattended, especially when using high heat or oil. Keep flammable objects away from stovetops and ovens, and clean cooking appliances regularly to prevent grease buildup.
-
-    - **Handle Candles with Care:** Use candles in sturdy holders placed on stable surfaces, away from curtains, bedding, and other flammable materials. Never leave candles burning unattended.
-
-    - **Maintain Heating Equipment:** Have furnaces, chimneys, and other heating appliances inspected and serviced annually by qualified professionals. Keep flammable materials away from heaters and fireplaces.
-
-    - **Store Flammable Materials Safely:** Store gasoline, propane, and other flammable materials in approved containers, away from heat sources and out of reach of children.
-
-    - **Educate Family Members:** Teach household members about fire safety practices, including how to escape in case of a fire. Develop and practice a fire escape plan regularly.
-
-    - **Monitor Smoking Habits:** If you smoke, do so outdoors and use deep, sturdy ashtrays. Never smoke in bed or when drowsy, and ensure that cigarette butts are completely extinguished before disposal.
-    """)
-
-    st.header("Emergency Preparedness Strategies:")
-    st.markdown("""
-    - **Develop an Emergency Plan:** Create a detailed emergency plan for your household, including evacuation routes, meeting points, and contact information for emergency services and family members.
-
-    - **Prepare an Emergency Kit:** Assemble a comprehensive emergency kit with essential supplies, including water, non-perishable food, medications, first aid supplies, flashlights, batteries, and important documents.
-
-    - **Stay Informed:** Stay informed about potential fire hazards and weather conditions in your area. Sign up for emergency alerts and monitor local news and weather reports during fire season.
-
-    - **Practice Fire Drills:** Conduct regular fire drills with household members to ensure that everyone knows what to do in case of a fire. Practice different scenarios, including daytime and nighttime evacuations.
-
-    - **Maintain Communication:** Establish communication protocols with family members and neighbors during emergencies. Designate an out-of-area contact person to coordinate communication and reunification efforts.
-
-    - **Stay Calm and Follow Procedures:** In the event of a fire, remain calm and follow established procedures. Evacuate immediately if necessary, and assist others who may need help, prioritizing safety above all else.
-    """)
-
-    st.header("Support Our Initiatives:")
-    st.markdown("""
-    - **Spread Awareness:** Help raise awareness about fire prevention and emergency preparedness by sharing information with your family, friends, and community members. Encourage others to take proactive steps to protect themselves and their loved ones.
-
-    - **Volunteer:** Get involved in local fire safety initiatives, such as community fire drills, smoke alarm installations, and educational events. Volunteer your time and skills to support fire departments and organizations working to improve fire safety.
-
-    - **Donate:** Consider donating to organizations that provide fire prevention education, support firefighting efforts, and assist individuals and communities affected by fires. Your contributions can make a meaningful difference in enhancing fire safety and resilience.
-    """)
 
 def feedback_page():
     # Sidebar
